@@ -41,7 +41,7 @@ class RegisterRequest extends FormRequest
     {
         throw new \Illuminate\Validation\ValidationException($validator, response()->json([
             'success' => false,
-            'global' => true,
+            'global' => false,
             'message' => 'Validation failed',
             'errors' => $validator->errors(),
         ], 422));

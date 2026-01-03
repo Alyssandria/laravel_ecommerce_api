@@ -6,8 +6,13 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Socialite;
 
 class AuthService {
+    public function oauth(Collection $validated) {
+        return Socialite::driver($validated->get('provider'))->userFromToken($validated->get('token'));
+    }
+
     public function login(Collection $credentials) {
 
         if (!Auth::attempt($credentials->toArray())){
