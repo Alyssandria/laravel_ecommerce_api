@@ -12,11 +12,19 @@ Route::post('/me', [UserController::class, 'PatchUser']);
 Route::controller(CartItemController::class)
     ->prefix('/cart-items')
     ->group(function () {
-
         // CREATE
         Route::post('/', [CartItemController::class, 'store']);
 
         // UPDATE
         Route::patch('/{cartItem}', [CartItemController::class, 'patch'])
             ->whereNumber('cartItem');
+
+        // DELETE
+        Route::delete('/{cartItem}', [CartItemController::class, 'delete'])
+            ->whereNumber('cartItem');
+
+        // GET ALL
+        Route::get('/', [CartItemController::class, 'index']);
+
+
     });

@@ -6,6 +6,7 @@ use App\Http\Requests\CartItemCreateRequest;
 use App\Http\Requests\CartItemUpdateRequest;
 use App\Models\CartItem;
 use App\Services\CartItemService;
+use Illuminate\Http\Request;
 
 
 class CartItemController extends Controller
@@ -18,6 +19,11 @@ class CartItemController extends Controller
                 $request->validated()
             );
     }
+
+    public function delete(CartItem $cartItem, CartItemService $cart) {
+        return $cart->delete($cartItem);
+    }
+
     public function store(CartItemCreateRequest $request, CartItemService $cart) {
         return $cart
             ->create(
@@ -25,5 +31,9 @@ class CartItemController extends Controller
                 collect($request->validated()
             )
         );
+    }
+
+    public function index(Request $request, CartItemService $cart) {
+        return $cart->all($request->user());
     }
 }

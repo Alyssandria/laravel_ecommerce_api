@@ -48,4 +48,17 @@ class CartItemService {
         );
     }
 
+    public function delete(CartItem $cartItem) {
+        return response()->noContent();
+    }
+
+    public function all(User $user) {
+        return response()->json([
+            'success' => true,
+            'message' => "All cart items",
+            'data' => $user->cartItems()->get()->toResourceCollection()
+        ]);
+
+    }
+
 }
