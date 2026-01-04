@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests;
 
-
-class LoginRequest extends BaseApiRequest
+class CartItemCreateRequest extends BaseApiRequest
 {
     public function authorize(): bool
     {
@@ -13,14 +12,13 @@ class LoginRequest extends BaseApiRequest
     public function rules(): array
     {
         return [
-            'email' => [
+            'quantity' => [
                 'required',
-                'email',
-                'max:255'
+                'integer'
             ],
-            'password' => [
+            'product_id' => [
                 'required',
-                'string'
+                'integer'
             ]
         ];
     }

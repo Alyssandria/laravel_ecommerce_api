@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UserProfileRequest extends FormRequest
+class UserProfileRequest extends BaseApiRequest
 {
     public function authorize(): bool
     {
@@ -26,4 +24,5 @@ class UserProfileRequest extends FormRequest
             ],
         ];
     }
+
 }

@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class RegisterRequest extends FormRequest
+class RegisterRequest extends BaseApiRequest
 {
     public function authorize(): bool
     {
@@ -35,15 +34,5 @@ class RegisterRequest extends FormRequest
                 Password::min(8)
             ]
         ];
-    }
-
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        throw new \Illuminate\Validation\ValidationException($validator, response()->json([
-            'success' => false,
-            'global' => false,
-            'message' => 'Validation failed',
-            'errors' => $validator->errors(),
-        ], 422));
     }
 }
