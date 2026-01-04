@@ -23,11 +23,26 @@ class CartItemService {
             ]);
         }
 
-
         return response()->json(
             [
                 'success' => true,
                 'message' => "Cart item succesfully added",
+                'data' => $cartItem->toResource()
+            ]
+        );
+    }
+
+    public function update(User $user, CartItem $cartItem, Array $data){
+        $cartItem->update($data);
+
+        if(empty($data)){
+            return response()->noContent();
+        }
+
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Cart item succesfully updated',
                 'data' => $cartItem->toResource()
             ]
         );

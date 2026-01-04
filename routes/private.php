@@ -9,4 +9,14 @@ Route::get('/me', [UserController::class, 'GetUser']);
 Route::post('/me', [UserController::class, 'PatchUser']);
 
 // CART ITEM ROUTES
-Route::post('/cart-items', [CartItemController::class, 'store']);
+Route::controller(CartItemController::class)
+    ->prefix('/cart-items')
+    ->group(function () {
+
+        // CREATE
+        Route::post('/', [CartItemController::class, 'store']);
+
+        // UPDATE
+        Route::patch('/{cartItem}', [CartItemController::class, 'patch'])
+            ->whereNumber('cartItem');
+    });
