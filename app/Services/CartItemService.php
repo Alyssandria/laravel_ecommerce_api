@@ -48,16 +48,34 @@ class CartItemService {
         );
     }
 
-    public function delete(CartItem $cartItem) {
-        $cartItem->delete();
+    public function delete(User $user, array $ids) {
+        CartItem::where('user_id', $user->id)
+            ->whereIn('id', $ids)
+            ->delete();
+
         return response()->noContent();
     }
 
     public function all(User $user) {
+        $cartItems = $user->cartItems()->get();
+
+        $productData = ProductService::getProductDataByIds(
+            $cartItems->map( function (CartItem $item) {
+                return $item->product_id;
+            })
+        );
+
         return response()->json([
             'success' => true,
             'message' => "All cart items",
-            'data' => $user->cartItems()->get()->toResourceCollection()
+            'data' => $cartItems->map(function (CartItem $cartItem) use($productData) {
+                return [
+                    'id' => $cartItem->id,
+                    'quantity' => $cartItem->quantity,
+                    'product_id' => $cartItem->product_id,
+                    'product_data' => $productData[$cartItem->product_id] ?? null
+                ];
+            })
         ]);
 
     }

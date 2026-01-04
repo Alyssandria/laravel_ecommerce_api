@@ -20,8 +20,7 @@ Route::controller(CartItemController::class)
             ->whereNumber('cartItem');
 
         // DELETE
-        Route::delete('/{cartItem}', [CartItemController::class, 'delete'])
-            ->whereNumber('cartItem');
+        Route::delete('/', [CartItemController::class, 'delete']);
 
         // GET ALL
         Route::get('/', [CartItemController::class, 'index']);

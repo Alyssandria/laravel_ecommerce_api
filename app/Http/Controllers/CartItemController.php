@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CartItemCreateRequest;
+use App\Http\Requests\CartItemDeleteRequest;
 use App\Http\Requests\CartItemUpdateRequest;
 use App\Models\CartItem;
 use App\Services\CartItemService;
@@ -21,9 +22,8 @@ class CartItemController extends Controller
             );
     }
 
-    public function delete(CartItem $cartItem, CartItemService $cart) {
-        Gate::authorize('delete', $cartItem);
-        return $cart->delete($cartItem);
+    public function delete(CartItemDeleteRequest $request, CartItemService $cart) {
+        return $cart->delete($request->user(), $request->validated('ids'));
     }
 
     public function store(CartItemCreateRequest $request, CartItemService $cart) {
