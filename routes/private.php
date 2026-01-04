@@ -25,6 +25,4 @@ Route::controller(CartItemController::class)
 
         // GET ALL
         Route::get('/', [CartItemController::class, 'index']);
-
-
     });

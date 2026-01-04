@@ -49,6 +49,7 @@ class CartItemService {
     }
 
     public function delete(CartItem $cartItem) {
+        $cartItem->delete();
         return response()->noContent();
     }
 

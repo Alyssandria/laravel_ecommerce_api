@@ -7,6 +7,7 @@ use App\Http\Requests\CartItemUpdateRequest;
 use App\Models\CartItem;
 use App\Services\CartItemService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 
 class CartItemController extends Controller
@@ -21,6 +22,7 @@ class CartItemController extends Controller
     }
 
     public function delete(CartItem $cartItem, CartItemService $cart) {
+        Gate::authorize('delete', $cartItem);
         return $cart->delete($cartItem);
     }
 
