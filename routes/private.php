@@ -32,11 +32,21 @@ Route::controller(AddressController::class)
     ->prefix('/addresses')
     ->group(function () {
 
+        // GET ALL
+        Route::get('/', 'index');
+
+        Route::get('/{address}', 'show')
+            ->whereNumber('address');
+
         // CREATE
         Route::post('/', 'store');
 
         // UPDATE
         Route::patch('/{address}', 'patch')
+            ->whereNumber('address');
+
+        // DELETE
+        Route::delete('/{address}', 'delete')
             ->whereNumber('address');
 
 

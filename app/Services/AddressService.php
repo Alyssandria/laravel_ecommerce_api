@@ -38,4 +38,26 @@ class AddressService {
             'data' => $address->toResource()
         ]);
     }
+
+    public function delete(User $user, Address $address) {
+        Address::where(['user_id' => $user->id, 'id' => $address->id])
+            ->delete();
+        return response()->noContent();
+    }
+
+    public function all(User $user) {
+        return response()->json([
+            'success' => true,
+            'message' => "All address fetched successfully",
+            'data' => $user->addresses()->get()->toResourceCollection()
+        ]);
+    }
+
+    public function get(Address $address){
+        return response()->json([
+            'success' => true,
+            'message' => "Address successfully fetched",
+            'data' => $address->toResource()
+        ]);
+    }
 }
