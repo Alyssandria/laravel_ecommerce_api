@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-// USER RELATED ROUTES
+// USER ROUTES
 Route::get('/me', [UserController::class, 'GetUser']);
 Route::post('/me', [UserController::class, 'PatchUser']);
 
@@ -13,15 +14,25 @@ Route::controller(CartItemController::class)
     ->prefix('/cart-items')
     ->group(function () {
         // CREATE
-        Route::post('/', [CartItemController::class, 'store']);
+        Route::post('/', 'store');
 
         // UPDATE
-        Route::patch('/{cartItem}', [CartItemController::class, 'patch'])
+        Route::patch('/{cartItem}', 'patch')
             ->whereNumber('cartItem');
 
         // DELETE
-        Route::delete('/', [CartItemController::class, 'delete']);
+        Route::delete('/', 'delete');
 
         // GET ALL
-        Route::get('/', [CartItemController::class, 'index']);
+        Route::get('/', 'index');
     });
+
+// Shipping Address
+Route::controller(AddressController::class)
+    ->prefix('/address')
+    ->group(function () {
+
+        // CREATE
+        Route::post('/', 'store');
+
+});
