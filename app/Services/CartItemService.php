@@ -32,7 +32,7 @@ class CartItemService {
         );
     }
 
-    public function update(User $user, CartItem $cartItem, Array $data){
+    public function update(CartItem $cartItem, Array $data){
         $cartItem->update($data);
 
         if(empty($data)){

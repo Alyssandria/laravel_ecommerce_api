@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
@@ -20,6 +21,20 @@ class AddressService {
         return response()->json([
             'success' => true,
             'message' => "Address successfully created",
+            'data' => $address->toResource()
+        ]);
+    }
+
+    public function update(Address $address, Array $data) {
+        $updated = $address->update($data);
+
+        if(!$updated){
+            return response()->noContent();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Address successfully updated",
             'data' => $address->toResource()
         ]);
     }

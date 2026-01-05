@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Address;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class AddressPolicy
 {
@@ -13,7 +12,7 @@ class AddressPolicy
      */
     public function update(User $user, Address $address): bool
     {
-        return false;
+        return $user->id === $address->user_id;
     }
 
     /**

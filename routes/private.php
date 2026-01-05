@@ -29,10 +29,15 @@ Route::controller(CartItemController::class)
 
 // Shipping Address
 Route::controller(AddressController::class)
-    ->prefix('/address')
+    ->prefix('/addresses')
     ->group(function () {
 
         // CREATE
         Route::post('/', 'store');
+
+        // UPDATE
+        Route::patch('/{address}', 'patch')
+            ->whereNumber('address');
+
 
 });

@@ -8,7 +8,6 @@ use App\Http\Requests\CartItemUpdateRequest;
 use App\Models\CartItem;
 use App\Services\CartItemService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 
 class CartItemController extends Controller
@@ -16,7 +15,6 @@ class CartItemController extends Controller
     public function patch(CartItemUpdateRequest $request, CartItem $cartItem, CartItemService $cart) {
         return $cart
             ->update(
-                $request->user(),
                 $cartItem,
                 $request->validated()
             );
