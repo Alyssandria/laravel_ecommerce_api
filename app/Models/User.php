@@ -33,18 +33,25 @@ class User extends Authenticatable
         ];
     }
     /**
-     * Gets all the cart items of this user
+     * Retrieves all the cart items of this specified user
      * @return HasMany<CartItem,User>
      */
     public function cartItems() {
         return $this->hasMany(CartItem::class);
     }
     /**
-     * Gets all the addresses of this user
+     * Retrieves all the addresses of this specified user
      * @return HasMany<Address,User>
      */
     public function addresses(): HasMany {
         return $this->hasMany(Address::class);
 
+    }
+    /**
+     * Retrieves all the orders of this specified user
+     * @return HasMany<Order,User>
+     */
+    public function orders(): HasMany {
+        return $this->hasMany(Order::class);
     }
 }
