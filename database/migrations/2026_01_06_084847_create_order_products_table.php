@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('image');
             $table->integer('quantity');
             $table->string('product_name');
-            $table->integer('product_link');
+            $table->string('product_link');
 
             $table->foreignId('order_id')
                   ->constrained()
