@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CartItemController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +29,7 @@ Route::controller(CartItemController::class)
         Route::get('/', 'index');
     });
 
-// Shipping Address
+// Shipping Address Routes
 Route::controller(AddressController::class)
     ->prefix('/addresses')
     ->group(function () {
@@ -35,6 +37,7 @@ Route::controller(AddressController::class)
         // GET ALL
         Route::get('/', 'index');
 
+        // GET ONE
         Route::get('/{address}', 'show')
             ->whereNumber('address');
 
@@ -48,6 +51,23 @@ Route::controller(AddressController::class)
         // DELETE
         Route::delete('/{address}', 'delete')
             ->whereNumber('address');
-
-
 });
+
+// Order Routes
+Route::controller(OrderController::class)
+    ->prefix('/orders')
+    ->group(function () {
+
+        // CREATE
+        Route::post('/', 'store');
+    });
+
+// Payment Routes
+Route::controller(PaymentController::class)
+    ->prefix('/payments')
+    ->group(function () {
+
+        // CREATE ORDER
+        Route::post('/', 'createOrder');
+
+    });

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OrderProducts extends Model
@@ -20,10 +21,8 @@ class OrderProducts extends Model
         'created_at',
         'updated_at'
     ];
-    /**
-     * @return HasOne<Order,OrderProduct>
-     */
-    public function order(): HasOne {
-        return $this->hasOne(Order::class);
+
+    public function order(): BelongsTo {
+        return $this->belongsTo(Order::class);
     }
 }

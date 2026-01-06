@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Address extends Model
@@ -29,5 +30,12 @@ class Address extends Model
      */
     public function user(): HasOne {
         return $this->hasOne(User::class);
+    }
+    /**
+     * Retrieves the orders that corresponds with this address
+     * @return HasMany<Order,Address>
+     */
+    public function orders(): HasMany {
+        return $this->hasMany(Order::class);
     }
 }

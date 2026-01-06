@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('order_no')->unique();
             $table->float('total', 8, 2);
+            $table->foreignId('address_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete();
