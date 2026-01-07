@@ -7,7 +7,7 @@ A production-ready REST API for e-commerce applications featuring authentication
 ## 🌍 Live API (Render Free Tier)
 
 * Base URL:
-    - https://your-render-api-url.onrender.com
+    - https://laravel-ecommerce-api-1.onrender.com/
 
 * ⚠️ Note:
     This API is deployed on Render’s free tier.
