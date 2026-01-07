@@ -70,7 +70,7 @@ Requires bearer token.
 
 ### Get all products
 
-**GET** `/api/products`
+**GET** `/api/v1/products`
 
 Optional query params:
 
@@ -82,11 +82,11 @@ Optional query params:
 
 ### Get product by ID
 
-**GET** `/api/products/{id}`
+**GET** `/api/v1/products/{id}`
 
 ### Admin: Create product
 
-**POST** `/api/admin/products`
+**POST** `/api/v1/admin/products`
 Requires admin token.
 
 ---
@@ -95,11 +95,11 @@ Requires admin token.
 
 ### View cart
 
-**GET** `/api/cart`
+**GET** `/api/v1/cart`
 
 ### Add product
 
-**POST** `/api/cart/add`
+**POST** `/api/v1/cart/add`
 
 Body:
 
@@ -112,11 +112,11 @@ Body:
 
 ### Update quantity
 
-**PUT** `/api/cart/update/{itemId}`
+**PUT** `/api/v1/cart/update/{itemId}`
 
 ### Remove item
 
-**DELETE** `/api/cart/remove/{itemId}`
+**DELETE** `/api/v1/cart/remove/{itemId}`
 
 ---
 
@@ -124,15 +124,15 @@ Body:
 
 ### Create order
 
-**POST** `/api/orders`
+**POST** `/api/v1/orders`
 
 ### Get user orders
 
-**GET** `/api/orders`
+**GET** `/api/v1/orders`
 
 ### Get single order
 
-**GET** `/api/orders/{id}`
+**GET** `/api/v1/orders/{id}`
 
 ---
 
@@ -140,7 +140,7 @@ Body:
 
 ### Create PayPal Order
 
-**POST** `/api/paypal/create-order`
+**POST** `/api/v1/paypal/create-order`
 
 Response (example):
 
@@ -153,7 +153,7 @@ Response (example):
 
 ### Capture Payment
 
-**POST** `/api/paypal/capture`
+**POST** `/api/v1/paypal/capture`
 
 Body:
 
@@ -165,7 +165,7 @@ Body:
 
 ### Webhook Entry (optional)
 
-**POST** `/api/paypal/webhook`
+**POST** `/api/v1/paypal/webhook`
 
 ---
 
@@ -180,20 +180,9 @@ DB_DATABASE=
 DB_USERNAME=
 DB_PASSWORD=
 
-SANCTUM_STATEFUL_DOMAINS=
-SESSION_DOMAIN=
-
-# S3 (optional)
-FILESYSTEM_DISK=s3
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_DEFAULT_REGION=ap-southeast-1
-AWS_BUCKET=
-
 # PayPal
 PAYPAL_CLIENT_ID=
 PAYPAL_SECRET=
-PAYPAL_MODE=sandbox|live
 ```
 
 ---
