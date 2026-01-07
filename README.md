@@ -4,6 +4,16 @@
 
 A production-ready REST API for e-commerce applications featuring authentication, product management, cart functionality, orders, and PayPal payment integration.
 
+## 🌍 Live API (Render Free Tier)
+
+* Base URL:
+    - https://your-render-api-url.onrender.com
+
+* ⚠️ Note:
+    This API is deployed on Render’s free tier.
+    When inactive, Render will put it to sleep, causing the first request to take 30–50 seconds.
+    After waking up, all endpoints respond normally.
+
 ---
 
 ## 🚀 Features
