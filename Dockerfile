@@ -9,7 +9,9 @@ RUN apk add --no-cache \
     oniguruma-dev \
     postgresql-dev \
     zip \
-    unzip
+    unzip \
+    supervisor \
+    git
 
 # PHP extensions
 RUN docker-php-ext-install \
@@ -37,7 +39,12 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 # Copy Nginx config
 COPY deploy/nginx.conf /etc/nginx/nginx.conf
 
+# Copy entrypoint script
+COPY deploy/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Expose port 80
 EXPOSE 80
 
-CMD ["sh", "-c", "php-fpm & nginx -g 'daemon off;'"]
-
+# Use entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
