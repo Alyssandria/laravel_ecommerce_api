@@ -97,15 +97,9 @@ class ProductService {
 
         if(isset($params['search'])){
             $products = collect($json->get('products'));
-            $notInSearch = [];
-            $inSearch = [];
 
-            $products->each(function (array $product) use(&$inSearch, &$notInSearch, $category){
-                if($product['category'] == $category){
-                    $inSearch[] = $product;
-                } else {
-                    $notInSearch[] = $product;
-                }
+            [$inSearch, $notInSearch] = $products->partition(function ($product) use ($category) {
+                return $product['category'] === $category;
             });
 
             return response()->json([
