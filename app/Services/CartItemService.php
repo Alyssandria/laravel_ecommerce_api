@@ -59,7 +59,9 @@ class CartItemService {
     public function all(User $user) {
         $cartItems = $user->cartItems()->get();
 
-        $productData = ProductService::getProductDataByIds(
+        $productService = new ProductService();
+
+        $productData = $productService->getProductDataByIds(
             $cartItems->map( function (CartItem $item) {
                 return $item->product_id;
             })

@@ -12,10 +12,17 @@ class ProductService {
      * Fetches product data by ids
      * @return Collection
      */
-    static function getProductDataByIds(Collection $ids) {
+
+    public string $base;
+
+    public function __construct(){
+        $this->base = config('products.base');
+    }
+
+    public function getProductDataByIds(Collection $ids) {
         $responses = collect(Http::pool(function (Pool $pool) use($ids) {
             return $ids->map(function (int $id) use($pool) {
-                return $pool->as($id)->get(config('products.base') . "/${id}");
+                return $pool->as($id)->get(self::$base . "${id}");
             })->all();
         }));
 
@@ -29,4 +36,97 @@ class ProductService {
         });
     }
 
+    public function getMany(array $params) {
+        $query = [
+            'limit' => isset($params['limit']) ? $params['limit'] : null,
+            'skip' => isset($params['skip']) ? $params['skip'] : null,
+        ];
+
+        $uri = "";
+        if (isset($params['search'])) {
+            $uri = $this->base . "/search";
+            $query['q'] = $params['search'];
+        } else {
+            $uri = $this->base;
+        }
+
+        $response = Http::get($uri, $query);
+
+        // TODO: Handle 500 error better
+        if(!$response->ok()){
+            return response()->json([
+                'success' => false,
+                'message' => "Something went wrong, please try again later",
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Products successfully retrieved",
+            'data' => $response->json()
+        ]);
+    }
+
+    public function getManyByCategory(string $category, array $params) {
+        $query = [
+            'limit' => isset($params['limit']) ? $params['limit'] : null,
+            'skip' => isset($params['skip']) ? $params['skip'] : null,
+        ];
+
+
+        $uri = "";
+        if (isset($params['search'])) {
+            $uri = $this->base . "/search";
+            $query['q'] = $params['search'];
+        } else {
+            $uri = $this->base . "/category/{$category}";
+        }
+
+        $response = Http::get($uri, $query);
+
+        // TODO: Handle 500 error better
+        if(!$response->ok()){
+            return response()->json([
+                'success' => false,
+                'message' => "Something went wrong, please try again later",
+            ], 500);
+        }
+
+
+        $json = collect($response->json());
+
+        if(isset($params['search'])){
+            $products = collect($json->get('products'));
+            $notInSearch = [];
+            $inSearch = [];
+
+            $products->each(function (array $product) use(&$inSearch, &$notInSearch, $category){
+                if($product['category'] == $category){
+                    $inSearch[] = $product;
+                } else {
+                    $notInSearch[] = $product;
+                }
+            });
+
+            return response()->json([
+                'success' => true,
+                'message' => "Products successfully retrieved",
+                'data' => [
+                    'in_category' => $inSearch,
+                    'not_in_category' => $notInSearch,
+                    'total' => $json->get('total'),
+                    'skip' => $json->get('skip'),
+                    'limit' => $json->get('limit'),
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Products successfully retrieved",
+            'data' => $json
+        ]);
+
+
+    }
 }

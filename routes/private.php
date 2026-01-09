@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -69,5 +70,18 @@ Route::controller(PaymentController::class)
 
         // CREATE ORDER
         Route::post('/', 'createOrder');
+
+    });
+
+// Product Routes
+Route::controller(ProductsController::class)
+    ->prefix('/products')
+    ->group(function () {
+
+        // GET ALL
+        Route::get('/', 'index');
+
+        // GET BY CATEGORY
+        Route::get('/category/{category}', 'indexByCategory');
 
     });
