@@ -72,16 +72,3 @@ Route::controller(PaymentController::class)
         Route::post('/', 'createOrder');
 
     });
-
-// Product Routes
-Route::controller(ProductsController::class)
-    ->prefix('/products')
-    ->group(function () {
-
-        // GET ALL
-        Route::get('/', 'index');
-
-        // GET BY CATEGORY
-        Route::get('/category/{category}', 'indexByCategory');
-
-    });

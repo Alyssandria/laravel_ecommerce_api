@@ -40,6 +40,9 @@ class ProductService {
         $query = [
             'limit' => isset($params['limit']) ? $params['limit'] : null,
             'skip' => isset($params['skip']) ? $params['skip'] : null,
+            'sortBy' => isset($params['sortBy']) ? $params['sortBy'] : null,
+            'order' => isset($params['order']) ? $params['order'] : null,
+            'select' => isset($params['select']) ? $params['select'] : null,
         ];
 
         $uri = "";
@@ -71,6 +74,9 @@ class ProductService {
         $query = [
             'limit' => isset($params['limit']) ? $params['limit'] : null,
             'skip' => isset($params['skip']) ? $params['skip'] : null,
+            'sortBy' => isset($params['sortBy']) ? $params['sortBy'] : null,
+            'order' => isset($params['order']) ? $params['order'] : null,
+            'select' => isset($params['select']) ? $params['select'] : null,
         ];
 
 
@@ -83,6 +89,7 @@ class ProductService {
         }
 
         $response = Http::get($uri, $query);
+
 
         // TODO: Handle 500 error better
         if(!$response->ok()){

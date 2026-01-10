@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\Enums\ProductCategories;
+use App\Http\Controllers\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,4 +14,17 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+
+// Product Routes
+Route::controller(ProductsController::class)
+    ->prefix('/products')
+    ->group(function () {
+
+        // GET ALL
+        Route::get('/', 'index');
+
+        // GET BY CATEGORY
+        Route::get('/category/{category}', 'indexByCategory')
+            ->whereIn('category', ProductCategories::cases());
+    });
 
