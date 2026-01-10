@@ -19,6 +19,35 @@ class ProductService {
         $this->base = config('products.base');
     }
 
+    public function get(int $productId, array $params) {
+        $query = [
+            'select' => isset($params['select']) ? $params['select'] : null,
+        ];
+
+        $response = Http::get($this->base . "/{$productId}", $query);
+
+        if(!$response->ok() and !$response->notFound()){
+            return response()->json([
+                'success' => false,
+                'message' =>  'Something went wrong, please try again later'
+            ], 500);
+        }
+
+        if($response->notFound()){
+            return response()->json([
+                'success' => false,
+                'message' =>  'Specific product cannot be found',
+                'product_id' => $productId
+            ], $response->status());
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Product successfully retrieved",
+            'data' => $response->json()
+        ]);
+    }
+
     public function getProductDataByIds(Collection $ids) {
         $responses = collect(Http::pool(function (Pool $pool) use($ids) {
             return $ids->map(function (int $id) use($pool) {

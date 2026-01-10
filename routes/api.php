@@ -23,6 +23,10 @@ Route::controller(ProductsController::class)
         // GET ALL
         Route::get('/', 'index');
 
+        // GET SINGLE
+        Route::get('/{product}', 'show')
+            ->whereNumber('product');
+
         // GET BY CATEGORY
         Route::get('/category/{category}', 'indexByCategory')
             ->whereIn('category', ProductCategories::cases());
