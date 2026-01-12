@@ -31,11 +31,11 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        /* $exceptions->render(function (NotFoundHttpException $e, $request) { */
-        /*     return response()->json([ */
-        /*         'success' => false, */
-        /*         'message' => 'Unauthorized or Invalid resource identifier', */
-        /*         'global' => true */
-        /*     ], 404); */
-        /* }); */
+        $exceptions->render(function (NotFoundHttpException $e, $request) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized or Invalid resource identifier',
+                'global' => true
+            ], 404);
+        });
     })->create();
