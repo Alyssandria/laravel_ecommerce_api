@@ -47,6 +47,16 @@ class PaymentService {
 
         $address = $user->addresses()->find($data['shipping_id']);
 
+        if(!$address) {
+            return response()->json([
+                'success' => false,
+                'message' => "User does not have the corresponding address",
+                'errors' => [
+                    'shipping_id' => $data['shipping_id']
+                ]
+            ], 422);
+        }
+
         $payload = [
             'body' => [
                 "intent" => "CAPTURE",
