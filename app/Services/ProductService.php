@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Client\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
@@ -19,7 +20,32 @@ class ProductService {
         $this->base = config('products.base');
     }
 
-    public function get(int $productId, array $params) {
+    public function categories(): JsonResponse {
+        $response = Http::get($this->base . "/categories");
+
+        if(!$response->ok()){
+            return response()->json([
+                'success' => false,
+                'message' => "Something went wrong, please try again later",
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "Categories retrieved successfully",
+            'data' => collect($response->json())->map(function (array $category) {
+                return [
+                    'name' => $category['name'],
+                    'slug' => $category['slug']
+                ];
+            })
+        ]);
+
+    }
+    /**
+     * @param array<int,mixed> $params
+     */
+    public function get(int $productId, array $params): JsonResponse {
         $query = [
             'select' => isset($params['select']) ? $params['select'] : null,
         ];
@@ -47,7 +73,9 @@ class ProductService {
             'data' => $response->json()
         ]);
     }
-
+    /**
+     * @param Collection<array-key,mixed> $ids
+     */
     public function getProductDataByIds(Collection $ids) {
         $responses = collect(Http::pool(function (Pool $pool) use($ids) {
             return $ids->map(function (int $id) use($pool) {
@@ -64,8 +92,10 @@ class ProductService {
             return [$key => $response->json()];
         });
     }
-
-    public function getMany(array $params) {
+    /**
+     * @param array<int,mixed> $params
+     */
+    public function getMany(array $params): JsonResponse {
         $query = [
             'limit' => isset($params['limit']) ? $params['limit'] : null,
             'skip' => isset($params['skip']) ? $params['skip'] : null,
@@ -98,8 +128,10 @@ class ProductService {
             'data' => $response->json()
         ]);
     }
-
-    public function getManyByCategory(string $category, array $params) {
+    /**
+     * @param array<int,mixed> $params
+     */
+    public function getManyByCategory(string $category, array $params): JsonResponse {
         $query = [
             'limit' => isset($params['limit']) ? $params['limit'] : null,
             'skip' => isset($params['skip']) ? $params['skip'] : null,

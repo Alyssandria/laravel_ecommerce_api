@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Enums\Enums;
+namespace App\Enums;
+
 
 enum ProductSortingOptions : string
 {
-    case ID = 'id';
     case TITLE = 'title';
     case PRICE = 'price';
     case DISCOUNT_PERCENTAGE = 'discountPercentage';

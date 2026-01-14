@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\Enums\ProductCategories;
+use App\Enums\ProductCategories;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +30,8 @@ Route::controller(ProductsController::class)
         // GET BY CATEGORY
         Route::get('/category/{category}', 'indexByCategory')
             ->whereIn('category', ProductCategories::cases());
+
+        // GET CATEGORY LIST
+        Route::get('/category-list', 'indexCategory');
     });
 

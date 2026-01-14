@@ -20,4 +20,8 @@ class ProductsController extends Controller
     public function indexByCategory(ProductsQueryRequest $request, string $category, ProductService $products) {
         return $products->getManyByCategory($category, $request->validated());
     }
+
+    public function indexCategory(ProductService $products) {
+        return $products->categories();
+    }
 }

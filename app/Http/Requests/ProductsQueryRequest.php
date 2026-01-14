@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Enums\ProductSortingOptions;
 use App\Enums\ProductFields;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Enums\ProductSortingOptions;
 use Illuminate\Validation\Rule;
 
 class ProductsQueryRequest extends BaseApiRequest

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Enums\Enums;
+namespace App\Enums;
 
 enum ProductCategories: string
 {
-
     case BEAUTY = 'beauty';
     case FRAGRANCES = 'fragrances';
     case FURNITURE = 'furniture';
